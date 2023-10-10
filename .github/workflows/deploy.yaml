@@ -1,4 +1,4 @@
-name: Deploy App to Server
+name: Deploy Docker Image
 
 on:
   push:
