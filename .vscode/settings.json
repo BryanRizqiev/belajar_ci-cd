@@ -1,0 +1,9 @@
+
+{
+    "go.alternateTools": {
+        "go": "/snap/go/current/bin/go"
+    },
+    "yaml.schemas": {
+        "https://json.schemastore.org/github-workflow.json": "file:///home/bryan/project/Belajar-golang/github-workflows/belajar_ci-cd/.github/workflows/deploy.yaml"
+    }
+}
