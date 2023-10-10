@@ -39,7 +39,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          ssh_agent_auth: true
+          passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             docker stop golang-app-container
             docker rm golang-app-container
