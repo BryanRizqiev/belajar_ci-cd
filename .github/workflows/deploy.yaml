@@ -27,3 +27,20 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/alta-golang-bryan:${{ github.ref_name }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: docker
+    steps:
+      - name: Connect to server using SSH
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            docker stop golang-app-container
+            docker rm golang-app-container
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/alta-golang-bryan:${{ github.ref_name }}
+            docker run -d -p 8080:8080 -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_HOST=${{ secrets.DB_HOST }} -e DB_NAME=${{ secrets.DB_NAME }} --name golang-app-container ${{ secrets.DOCKERHUB_USERNAME }}/alta-golang-bryan:${{ github.ref_name }}
